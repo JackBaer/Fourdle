@@ -25,6 +25,34 @@ hr {
     flex-wrap: wrap;
 }
 
+#question {
+    width: 350px;
+    height: 70px;
+    margin: 0 auto;
+    margin-top: 3px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.question-tile {
+    background-color: #6aaa64;
+    color: white;
+    border-color: white;
+
+    /* Box setup, 60x60 with 2px border and 5px spacing */
+    border: 2px solid;
+    width: 60px;
+    height: 60px;
+    margin: 2.5px;
+
+    /* Box text setup, 36px black bolded letters centered in box */
+    font-size: 36px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Tile class for guessed letters */
 .tile {
     /* Box setup, 60x60 with 2px border and 5px spacing */

@@ -70,7 +70,19 @@ function update() {
         //All tiles are correct
         if(correct == width) {
             gameOver = true;
-            document.getElementById("answer").innerText = "Congratulations, you guessed the word!"
+            document.getElementById("answer").innerText = "I know it's not the most extravagant, but..."
+            for(let j = 0; j < width+1; j++) {
+                let tile = document.createElement("span");
+                tile.id = i.toString() + "-" + j.toString();
+                tile.classList.add("question-tile");
+                if(j < width) {
+                    tile.innerText = word[j];
+                }
+                else {
+                    tile.innerText = "?";
+                }
+                document.getElementById("question").appendChild(tile);
+            }
         }
     }
 
@@ -141,7 +153,7 @@ function processInput(e) {
 
     if(!gameOver && row == height) {
         gameOver = true;
-        document.getElementById("answer").innerText = word;
+        document.getElementById("answer").innerText = "Refresh the page to try again!";
     }
 }
 
