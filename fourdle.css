@@ -62,3 +62,40 @@ hr {
     color: white;
     border-color: white;
 }
+
+.keyboard-row {
+    width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.key-tile {
+    /* Tile setup, 36x40 with 1px border and 2px spacing */
+    border: 1px solid lightgray;
+    width: 36px;
+    height: 40px;
+    margin: 1px;
+
+    /* Tile text setup, 20px black bolded letters centered in box */
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.enter-key-tile {
+    /* Tile setup, 76x40 with 1px border and 2px spacing */
+    border: 1px solid lightgray;
+    width: 76px;
+    height: 40px;
+    margin: 1px;
+
+    /* Tile text setup, 20px black bolded letters centered in box */
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

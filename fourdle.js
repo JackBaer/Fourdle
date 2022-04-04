@@ -55,6 +55,11 @@ function update() {
         //Is it in the correct position?
         if(word[i] == letter) {
             currentTile.classList.add("correct");
+
+            let keyTile = document.getElementById("Key" + letter);
+            keyTile.classList.remove("present");
+            keyTile.classList.add("correct");
+
             correct++;
             letterCount[letter]--;
         }
@@ -75,6 +80,13 @@ function update() {
             //Is it in the word?
             if(word.includes(letter) && letterCount[letter] > 0) {
                 currentTile.classList.add("present");
+
+                //Color keyboard tiles accordingly
+                let keyTile = document.getElementById("Key" + letter);
+                if(!keyTile.classList.contains("correct")) {
+                    keyTile.classList.add("present");
+                }   
+
                 letterCount[letter]--;
             }
             //Not in word
@@ -85,6 +97,47 @@ function update() {
     }
     row++; //start new row
     column = 0; //start at beginning of line
+}
+
+function processInput(e) {
+    if(gameOver) {
+        return;
+    }
+    //If a letter key is pressed, get the current tile's index and populate it with the pressed key, then move on to next tile
+    if("KeyA" <= e.code && e.code <= "KeyZ") {
+        if(column < width) {
+            //Construct index
+            let currentTile = document.getElementById(row.toString() + "-" + column.toString());
+            if(currentTile.innerText == "") {
+                //Letter component of code 'KeyA'
+                currentTile.innerText = e.code[3];
+                column++;
+            }
+        }
+    }
+    //If the backspace key is pressed, get the current tile's index and populate it with an empty string, then move on to previous tile
+    else if(e.code == "Backspace") { 
+        if(0 < column && column <= width) {
+            column--;
+        }
+        //Construct index
+        let currentTile = document.getElementById(row.toString() + "-" + column.toString());
+        currentTile.innerText = "";
+    }
+
+    else if(e.code == "Enter") {
+        update();
+    }
+
+    if(!gameOver && row == height) {
+        gameOver = true;
+        document.getElementById("answer").innerText = word;
+    }
+}
+
+function processKey() {
+    let e = {"code": this.id};
+    processInput(e);
 }
 
 function initialize() {
@@ -102,42 +155,50 @@ function initialize() {
         }
     }
 
+    //Create keyboard
+    let keyboard = [
+        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+        ["A", "S", "D", "F", "G", "H", "J", "K", "L", " "],
+        ["Enter", "Z", "X", "C", "V", "B", "N", "M", "⌫" ]
+    ];
+
+    for(let i = 0; i < keyboard.length; i++) {
+        let currentRow = keyboard[i];
+        let keyboardRow = document.createElement("div");
+        keyboardRow.classList.add("keyboard-row");
+
+        for(let j = 0; j < currentRow.length; j++) {
+            let keyTile = document.createElement("div");
+
+            let key = currentRow[j];
+            keyTile.innerText = key;
+            if(key == "Enter") {
+                keyTile.id = "Enter";
+            }
+            else if(key == "⌫") {
+                keyTile.id = "Backspace";
+            }
+            else if("A" <= key && key <= "Z") {
+                keyTile.id = "Key" + key;
+            }
+
+            keyTile.addEventListener("click", processKey);
+
+            if(key == "Enter") {
+                keyTile.classList.add("enter-key-tile");
+            }
+            else {
+                keyTile.classList.add("key-tile");
+            }
+            keyboardRow.appendChild(keyTile);
+        }
+        document.body.appendChild(keyboardRow);
+    }
+
     //Listen for key presses
     document.addEventListener("keyup", (e) => {
-        if(gameOver) {
-            return;
-        }
-        //If a letter key is pressed, get the current tile's index and populate it with the pressed key, then move on to next tile
-        if("KeyA" <= e.code && e.code <= "KeyZ") {
-            if(column < width) {
-                //Construct index
-                let currentTile = document.getElementById(row.toString() + "-" + column.toString());
-                if(currentTile.innerText == "") {
-                    //Letter component of code 'KeyA'
-                    currentTile.innerText = e.code[3];
-                    column++;
-                }
-            }
-        }
-        //If the backspace key is pressed, get the current tile's index and populate it with an empty string, then move on to previous tile
-        else if(e.code == "Backspace") { 
-            if(0 < column && column <= width) {
-                column--;
-            }
-            //Construct index
-            let currentTile = document.getElementById(row.toString() + "-" + column.toString());
-            currentTile.innerText = "";
-        }
-
-        else if(e.code == "Enter") {
-            update();
-        }
-
-        if(!gameOver && row == height) {
-            gameOver = true;
-            document.getElementById("answer").innerText = word;
-        }
-    });
+        processInput(e);
+    });    
 }
 
 //When the webpage renders, call the initialize function
