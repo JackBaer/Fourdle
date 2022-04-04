@@ -70,7 +70,7 @@ function update() {
         //All tiles are correct
         if(correct == width) {
             gameOver = true;
-            document.getElementById("answer").innerText = "I know it's not the most extravagant, but..."
+            document.getElementById("answer").innerText = "I know it's not the most extravagant way of asking, but..."
             for(let j = 0; j < width+1; j++) {
                 let tile = document.createElement("span");
                 tile.id = i.toString() + "-" + j.toString();
