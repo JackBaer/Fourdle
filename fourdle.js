@@ -92,6 +92,11 @@ function update() {
             //Not in word
             else {
                 currentTile.classList.add("absent");
+
+                let keyTile = document.getElementById("Key" + letter);
+                if(!keyTile.classList.contains("correct") && !keyTile.classList.contains("present")) {
+                    keyTile.classList.add("absent");
+                }
             }
         }
     }
