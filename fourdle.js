@@ -19,9 +19,9 @@ var guessList = ["aahs", "abbe", "abbr", "abed", "abet", "able", "ably", "abut",
 var word = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
 console.log(word);
 
-function hardMode() {
-    window.location.href = "hardmode.html";
-}
+//function hardMode() {
+//    window.location.href = "hardmode.html";
+//}
 
 function update() {
     let guess = "";
@@ -80,11 +80,11 @@ function update() {
         if(correct == width) {
             gameOver = true;
             document.getElementById("answer").innerText = "Congratulations, you guessed the word!"
-            var a = document.createElement("a");
-            var link = document.createTextNode("Hard Mode");
-            a.appendChild(link);
-            a.title = "Hard Mode";
-            a.href = "hardmode.html";
+            //var a = document.createElement("a");
+            //var link = document.createTextNode("Hard Mode");
+            //a.appendChild(link);
+            //a.title = "Hard Mode";
+            //a.href = "hardmode.html";
             document.body.appendChild(a);
         }
     }
